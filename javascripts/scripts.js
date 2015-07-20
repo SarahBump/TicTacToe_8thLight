@@ -1,4 +1,7 @@
-var game = new TicTacToeGame('tic-tac-toe');
+
+//  creates a new game object with a name
+    // Modify this name to something unique for you
+var game = new TicTacToeGame('games-for-days');
 
 
 /**
@@ -25,25 +28,38 @@ function draw(){
  */
 window.onload = function(){
 
-  var board = document.getElementById('ttt-board');
-      board.addEventListener('mousedown', function(event){
-        //do this
-        var temp = event.target.getAttribute('id');
-        console.log(temp[0]  +" " + temp[2]);
-        game.move(temp[0], temp[2]);
-      });
+    game.p1 = confirm("Is player 1 a human? (ok for yes)");
+    game.p2 = confirm("Is player 2 a human? (ok for yes)");
 
-      setInterval(draw, 50);
+    var board = document.getElementById('ttt-board');
 
-  // EXAMPLE OF MAKING MOVE ~~~~ remove this ~~~~
-  /*setTimeout(function(){
-    game.move(1, 1);  // Let's pretend the first player moves in the center!
-  }, 2000);
 
-  // EXAMPLE OF MAKING MOVE ~~~~ remove this ~~~~
-  setTimeout(function(){
-    game.move(0, 0); // Let's pretend the second player moves in the upper left!
-  }, 3000);
+    board.addEventListener('mousedown', function(event){
+      //do this
+      var temp = event.target.getAttribute('id');
+      console.log(temp[0]  +" " + temp[2]);
 
-*/
+      game.move(temp[0], temp[2]);
+
+    });
+
+
+    game.refreshID  = setInterval(function(){
+      draw();
+      game.computerMove();
+
+      if(game.checkWin(1)){
+        alert("Player 1 wins!");
+
+          clearInterval(game.refreshID)
+      }else if(game.checkWin(2)){
+        alert("Player 2 wins!");
+
+          clearInterval(game.refreshID)
+      }
+    }, 1000)
+
+    setInterval(draw, 50);
+
+
 };
